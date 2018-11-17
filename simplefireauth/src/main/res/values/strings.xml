@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SimpleFireAuth</string>
+
+    <string name="login">Login</string>
+    <string name="sign_up_name">What’s your name?</string>
+    <string name="sign_up_email">And your email?</string>
+    <string name="sign_up_password">Create a password</string>
+    <string name="sign_up_password_length">Should be at least 6 characters long</string>
+    <string name="sign_up_next">Go to the next step</string>
+    <string name="sign_up_pre_final">Go to the last step</string>
+    <string name="sign_up_final">Start learning!</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Should be at least 6 characters long</string>
+    <string name="next">Continue</string>
+    <string name="forgot">Forgot password?</string>
+    <string name="email_forgot_title">What’s your email?</string>reset_password
+    <string name="reset_password">Reset password</string>
+    <string name="reset_password_done_title">Done</string>
+    <string name="reset_password_done_msg">Check your E-mail for instructions on how to reset your password.</string>
+    <string name="reset_password_err_title">Oh</string>
+    <string name="reset_password_err_msg">Something went wrong. Check please if E-mail is correct and try again.</string>
+    <string name="reset_password_empty_title">Oh</string>
+    <string name="email_field_empty_msg">Email field is empty. Please enter your E-mail</string>
+    <string name="fields_empty_title">Fields is required.</string>
+    <string name="fields_empty_msg">You have left a field empty. Please fill all fields</string>
+    <string name="err_title">Oops</string>
+    <string name="err_msg">An Error happen. Please Try Again</string>
+    <string name="auth_fail_title">Authorization failed</string>
+    <string name="auth_fail_msg">Please verify your credentials.</string>
+</resources>
