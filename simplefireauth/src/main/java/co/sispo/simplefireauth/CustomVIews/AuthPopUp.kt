@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib.CustomVIews
+package co.sispo.simplefireauth.CustomVIews
 
 import android.content.Context
 import android.graphics.Color
@@ -15,8 +15,8 @@ import android.text.TextWatcher
 import android.widget.ImageView
 import co.sispo.simplefireauth.R
 import co.sispo.simplefireauth.StringMaster
-import co.sispo.simplefireauth.lib.Utils.fireAlert
-import co.sispo.simplefireauth.lib.lib.CustomVIews.PopUp
+import co.sispo.simplefireauth.Utils.fireAlert
+import co.sispo.simplefireauth.CustomVIews.PopUp
 
 
 class AuthPopUp(context: Context, var root: ConstraintLayout, var hideKeyboard: () -> Unit) : PopUp(context, root) {

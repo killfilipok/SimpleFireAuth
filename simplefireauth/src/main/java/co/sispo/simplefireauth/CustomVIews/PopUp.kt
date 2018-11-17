@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib.lib.CustomVIews
+package co.sispo.simplefireauth.CustomVIews
 
 import android.content.Context
 import android.graphics.Color
@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import co.sispo.simplefireauth.R
 import co.sispo.simplefireauth.StringMaster
-import co.sispo.simplefireauth.lib.Utils
+import co.sispo.simplefireauth.Utils
 
 
 open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = null) {

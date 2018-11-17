@@ -6,7 +6,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.view.ViewCompat
 import android.view.View
 import android.widget.ProgressBar
-import co.sispo.simplefireauth.lib.Utils.createMargins
+import co.sispo.simplefireauth.Utils.createMargins
 
 class WaitSplash(val activity: Activity, root: ConstraintLayout) {
 

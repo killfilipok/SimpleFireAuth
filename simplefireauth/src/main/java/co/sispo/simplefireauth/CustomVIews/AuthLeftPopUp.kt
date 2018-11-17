@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib.CustomVIews
+package co.sispo.simplefireauth.CustomVIews
 
 import android.content.Context
 import android.graphics.Color
@@ -8,7 +8,7 @@ import android.support.constraint.ConstraintSet
 import android.support.v4.content.ContextCompat
 import android.view.View
 import co.sispo.simplefireauth.StringMaster
-import co.sispo.simplefireauth.lib.lib.CustomVIews.PopUp
+import co.sispo.simplefireauth.CustomVIews.PopUp
 
 open class AuthLeftPopUp(context: Context,val root: ConstraintLayout,var claback: ()-> Unit, id: Int,hideKeyBoard : ()-> Unit) : PopUp(context, root,id) {
 

@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib
+package co.sispo.simplefireauth
 
 import android.app.Activity
 import android.content.Context
@@ -28,8 +28,8 @@ import co.sispo.simplefireauth.CustomVIews.WaitSplash
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import co.sispo.simplefireauth.StringMaster
-import co.sispo.simplefireauth.lib.CustomVIews.AuthPopUp
-import co.sispo.simplefireauth.lib.Utils.fireAlert
+import co.sispo.simplefireauth.CustomVIews.AuthPopUp
+import co.sispo.simplefireauth.Utils.fireAlert
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentReference

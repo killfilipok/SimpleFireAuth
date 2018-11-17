@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib
+package co.sispo.simplefireauth
 
 import android.content.Context
 import android.os.Build

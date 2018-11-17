@@ -1,4 +1,4 @@
-package co.sispo.simplefireauth.lib.CustomVIews
+package co.sispo.simplefireauth.CustomVIews
 
 import android.content.ClipDescription
 import android.content.Context
