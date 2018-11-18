@@ -90,6 +90,7 @@ open class AuthFlow(
 
     fun setUpFacebookLogin(facebook_btn: View) {
         facebook_btn.setOnClickListener({
+            waitSplash.show()
             LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email", "public_profile"))
             LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
