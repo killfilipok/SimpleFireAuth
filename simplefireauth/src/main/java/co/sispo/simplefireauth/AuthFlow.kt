@@ -252,20 +252,45 @@ open class AuthFlow(
             val userObj = HashMap<String, Any>()
             userObj["name"] = nameToPush
             userObj["email"] = user.email!!
-
             mDb.collection("users")
                     .document(user.uid)
-                    .update(userObj)
-                    .addOnSuccessListener {
-                        waitSplash.hide()
-                        userHandler(user.uid, user.email!!, nameToPush)
-                        if(inAuthPopUp) popUp.hide()
-                    }
-                    .addOnFailureListener { p0 ->
-                        waitSplash.hide()
-                        fireAlert(activity, StringMaster.myStringMaster!!.err_title, p0.toString())
-                    }
+                    .get()
+                    .addOnCompleteListener({ task ->
+                        if (task.isSuccessful) {
+                            val document = task.result as DocumentSnapshot
+                            if (document.exists()) {
+                                val data = document.data!!
+                                val name = if (data["name"] == null)
+                                    "" else data["languageToLearn"].toString()
+                                val email = if (data["email"] == null)
+                                    "" else data["email"].toString()
+
+                                if (name.isEmpty() || email.isEmpty()){
+                                    createUser(user, userObj,nameToPush, inAuthPopUp)
+                                } else {
+                                    userHandler(user.uid, email, name)
+                                }
+                            } else {
+                               createUser(user, userObj,nameToPush, inAuthPopUp)
+                            }
+                        }
+                    })
         }
+    }
+
+    fun createUser(user: FirebaseUser, userObj:HashMap<String,Any>, nameToPush: String, inAuthPopUp: Boolean){
+        mDb.collection("users")
+                .document(user.uid)
+                .set(userObj)
+                .addOnSuccessListener {
+                    waitSplash.hide()
+                    userHandler(user.uid, user.email!!, nameToPush)
+                    if(inAuthPopUp) popUp.hide()
+                }
+                .addOnFailureListener { p0 ->
+                    waitSplash.hide()
+                    fireAlert(activity, StringMaster.myStringMaster!!.err_title, p0.toString())
+                }
     }
 
     fun handleAuthCredential(credential: AuthCredential) {
