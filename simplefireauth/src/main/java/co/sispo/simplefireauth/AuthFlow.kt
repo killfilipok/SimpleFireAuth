@@ -266,7 +266,18 @@ open class AuthFlow(
                                     "" else data["email"].toString()
 
                                 if (name.isEmpty() || email.isEmpty()){
-                                    createUser(user, userObj,nameToPush, inAuthPopUp)
+                                    mDb.collection("users")
+                                            .document(user.uid)
+                                            .update(userObj)
+                                            .addOnSuccessListener {
+                                                waitSplash.hide()
+                                                userHandler(user.uid, user.email!!, nameToPush)
+                                                if(inAuthPopUp) popUp.hide()
+                                            }
+                                            .addOnFailureListener { p0 ->
+                                                waitSplash.hide()
+                                                fireAlert(activity, StringMaster.myStringMaster!!.err_title, p0.toString())
+                                            }
                                 } else {
                                     userHandler(user.uid, email, name)
                                 }
