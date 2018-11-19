@@ -255,20 +255,16 @@ open class AuthFlow(
 
             mDb.collection("users")
                     .document(user.uid)
-                    .set(userObj)
-                    .addOnSuccessListener(object : OnSuccessListener<Void> {
-                        override fun onSuccess(p0: Void?) {
-                            waitSplash.hide()
-                            userHandler(user.uid, user.email!!, nameToPush)
-                            if(inAuthPopUp) popUp.hide()
-                        }
-                    })
-                    .addOnFailureListener(object : OnFailureListener {
-                        override fun onFailure(p0: Exception) {
-                            waitSplash.hide()
-                            fireAlert(activity, StringMaster.myStringMaster!!.err_title, p0.toString())
-                        }
-                    })
+                    .update(userObj)
+                    .addOnSuccessListener {
+                        waitSplash.hide()
+                        userHandler(user.uid, user.email!!, nameToPush)
+                        if(inAuthPopUp) popUp.hide()
+                    }
+                    .addOnFailureListener { p0 ->
+                        waitSplash.hide()
+                        fireAlert(activity, StringMaster.myStringMaster!!.err_title, p0.toString())
+                    }
         }
     }
 
