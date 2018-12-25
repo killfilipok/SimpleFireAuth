@@ -80,16 +80,16 @@ open class AuthFlow(
                 .build()
 
         val googleSignInClient = GoogleSignIn.getClient(activity, gso);
-        google_btn.setOnClickListener({
+        google_btn.setOnClickListener{
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(activity, signInIntent, RC_SIGN_IN, null)
 
             waitSplash.show()
-        })
+        }
     }
 
     fun setUpFacebookLogin(facebook_btn: View) {
-        facebook_btn.setOnClickListener({
+        facebook_btn.setOnClickListener{
             waitSplash.show()
             LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email", "public_profile"))
             LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -107,22 +107,22 @@ open class AuthFlow(
                     waitSplash.hide()
                 }
             })
-        })
+        }
 
 
     }
 
 
     fun setUpAuthWithEmail(sign_up_btn: View, sign_in_btn: View) {
-        sign_up_btn.setOnClickListener({
+        sign_up_btn.setOnClickListener{
             popUp.createSignUp(::popUpSignUpWithEmail)
             popUp.show()
-        })
+        }
 
-        sign_in_btn.setOnClickListener({
+        sign_in_btn.setOnClickListener{
             popUp.createSignIn(::popUpSignInWithEmail, ::forgotPassword)
             popUp.show()
-        })
+        }
     }
 
     fun forgotPassword(email: String, calback: () -> Unit) {
@@ -161,12 +161,12 @@ open class AuthFlow(
     }
 
     fun fieldsIsNotEmpty(arr: Array<String>): Boolean {
-        arr.forEach({ e ->
+        arr.forEach{ e ->
             if (e.isEmpty()) {
                 fireAlert(activity, StringMaster.myStringMaster!!.fields_empty_title, StringMaster.myStringMaster!!.fields_empty_msg)
                 return false
             }
-        })
+        }
         return true
     }
 
@@ -255,13 +255,13 @@ open class AuthFlow(
             mDb.collection("users")
                     .document(user.uid)
                     .get()
-                    .addOnCompleteListener({ task ->
+                    .addOnCompleteListener{ task ->
                         if (task.isSuccessful) {
                             val document = task.result as DocumentSnapshot
                             if (document.exists()) {
                                 val data = document.data!!
                                 val name = if (data["name"] == null)
-                                    "" else data["languageToLearn"].toString()
+                                    "Anonymous" else data["name"].toString()
                                 val email = if (data["email"] == null)
                                     "" else data["email"].toString()
 
@@ -285,7 +285,7 @@ open class AuthFlow(
                                createUser(user, userObj,nameToPush, inAuthPopUp)
                             }
                         }
-                    })
+                    }
         }
     }
 

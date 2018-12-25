@@ -32,7 +32,7 @@ class WaitSplash(val activity: Activity, root: ConstraintLayout) {
 
         progressBar.layoutParams = circleParams
 
-        progressBar.getIndeterminateDrawable().setColorFilter(circleColor, android.graphics.PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(circleColor, android.graphics.PorterDuff.Mode.MULTIPLY)
 
         waitSplash.addView(progressBar, circleParams)
         waitSplash.isClickable = true
