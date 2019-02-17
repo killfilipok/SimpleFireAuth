@@ -190,7 +190,7 @@ open class AuthFlow(
                                             override fun onComplete(p0: Task<DocumentSnapshot>) {
                                                 if (p0.isSuccessful) {
                                                     val document = p0.result as DocumentSnapshot
-                                                    if (document.exists()) {
+                                                    if (document.exists() && document.data != null) {
                                                         val data = document.data!!
 
                                                         waitSplash.hide()
@@ -231,7 +231,7 @@ open class AuthFlow(
                 val account = task.getResult(ApiException::class.java)
 
                 firebaseAuthWithGoogle(account!!)
-            } catch (e: ApiException) {
+            } catch (e: Exception) {
                 waitSplash.hide()
             }
         }
@@ -247,18 +247,18 @@ open class AuthFlow(
             fireAlert(activity, StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.err_msg)
         } else {
             if (!user.displayName.isNullOrEmpty()) {
-                nameToPush = user.displayName!!
+                nameToPush = user.displayName?:"anonymous"
             }
             val userObj = HashMap<String, Any>()
             userObj["name"] = nameToPush
-            userObj["email"] = user.email!!
+            userObj["email"] = user.email?:""
             mDb.collection("users")
                     .document(user.uid)
                     .get()
                     .addOnCompleteListener{ task ->
                         if (task.isSuccessful) {
                             val document = task.result as DocumentSnapshot
-                            if (document.exists()) {
+                            if (document.exists() && document.data != null) {
                                 val data = document.data!!
                                 val name = if (data["name"] == null)
                                     "Anonymous" else data["name"].toString()
@@ -271,7 +271,7 @@ open class AuthFlow(
                                             .update(userObj)
                                             .addOnSuccessListener {
                                                 waitSplash.hide()
-                                                userHandler(user.uid, user.email!!, nameToPush)
+                                                userHandler(user.uid, user.email?:"", nameToPush)
                                                 if(inAuthPopUp) popUp.hide()
                                             }
                                             .addOnFailureListener { p0 ->
@@ -295,7 +295,7 @@ open class AuthFlow(
                 .set(userObj)
                 .addOnSuccessListener {
                     waitSplash.hide()
-                    userHandler(user.uid, user.email!!, nameToPush)
+                    userHandler(user.uid, user.email?:"", nameToPush)
                     if(inAuthPopUp) popUp.hide()
                 }
                 .addOnFailureListener { p0 ->
