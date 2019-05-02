@@ -41,14 +41,15 @@ import java.lang.Exception
 open class AuthFlow(
         var activity: Activity,
         var root: ConstraintLayout,
-        var userHandler: ((uid:String, email: String, name: String) -> Unit),
+        var userHandler: ((uid: String, email: String, name: String) -> Unit),
         var mAuth: FirebaseAuth,
         var mDb: FirebaseFirestore,
+        var customColor: String? = null,
         master: StringMaster? = null) {
 
     init {
-        if(master == null){
-            StringMaster.myStringMaster = StringMaster(activity)
+        if (master == null) {
+            StringMaster.myStringMaster = StringMaster(activity, customColor)
         } else {
             StringMaster.myStringMaster = master
         }
@@ -80,7 +81,7 @@ open class AuthFlow(
                 .build()
 
         val googleSignInClient = GoogleSignIn.getClient(activity, gso);
-        google_btn.setOnClickListener{
+        google_btn.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(activity, signInIntent, RC_SIGN_IN, null)
 
@@ -89,7 +90,7 @@ open class AuthFlow(
     }
 
     fun setUpFacebookLogin(facebook_btn: View) {
-        facebook_btn.setOnClickListener{
+        facebook_btn.setOnClickListener {
             waitSplash.show()
             LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email", "public_profile"))
             LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -114,12 +115,12 @@ open class AuthFlow(
 
 
     fun setUpAuthWithEmail(sign_up_btn: View, sign_in_btn: View) {
-        sign_up_btn.setOnClickListener{
+        sign_up_btn.setOnClickListener {
             popUp.createSignUp(::popUpSignUpWithEmail)
             popUp.show()
         }
 
-        sign_in_btn.setOnClickListener{
+        sign_in_btn.setOnClickListener {
             popUp.createSignIn(::popUpSignInWithEmail, ::forgotPassword)
             popUp.show()
         }
@@ -131,11 +132,11 @@ open class AuthFlow(
             mAuth.sendPasswordResetEmail(email)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            fireAlert(activity,  StringMaster.myStringMaster!!.reset_password_done_title, StringMaster.myStringMaster!!.reset_password_done_msg, { calback() })
+                            fireAlert(activity, StringMaster.myStringMaster!!.reset_password_done_title, StringMaster.myStringMaster!!.reset_password_done_msg, { calback() })
                         }
                     }
                     .addOnFailureListener {
-                        fireAlert(activity,StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.err_msg)
+                        fireAlert(activity, StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.err_msg)
                     }
         } else {
             fireAlert(activity, StringMaster.myStringMaster!!.fields_empty_title, StringMaster.myStringMaster!!.email_field_empty_msg)
@@ -161,7 +162,7 @@ open class AuthFlow(
     }
 
     fun fieldsIsNotEmpty(arr: Array<String>): Boolean {
-        arr.forEach{ e ->
+        arr.forEach { e ->
             if (e.isEmpty()) {
                 fireAlert(activity, StringMaster.myStringMaster!!.fields_empty_title, StringMaster.myStringMaster!!.fields_empty_msg)
                 return false
@@ -198,14 +199,14 @@ open class AuthFlow(
                                                         popUp.hide()
                                                     } else {
                                                         waitSplash.hide()
-                                                        fireAlert(activity, StringMaster.myStringMaster!!.err_title,StringMaster.myStringMaster!!.auth_fail_msg)
+                                                        fireAlert(activity, StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.auth_fail_msg)
                                                     }
                                                 }
                                             }
                                         })
                                         .addOnFailureListener {
                                             waitSplash.hide()
-                                            fireAlert(activity, StringMaster.myStringMaster!!.err_title,StringMaster.myStringMaster!!.err_msg)
+                                            fireAlert(activity, StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.err_msg)
                                         }
                             }
                         } else {
@@ -247,15 +248,15 @@ open class AuthFlow(
             fireAlert(activity, StringMaster.myStringMaster!!.err_title, StringMaster.myStringMaster!!.err_msg)
         } else {
             if (!user.displayName.isNullOrEmpty()) {
-                nameToPush = user.displayName?:"anonymous"
+                nameToPush = user.displayName ?: "anonymous"
             }
             val userObj = HashMap<String, Any>()
             userObj["name"] = nameToPush
-            userObj["email"] = user.email?:""
+            userObj["email"] = user.email ?: ""
             mDb.collection("users")
                     .document(user.uid)
                     .get()
-                    .addOnCompleteListener{ task ->
+                    .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val document = task.result as DocumentSnapshot
                             if (document.exists() && document.data != null) {
@@ -265,14 +266,14 @@ open class AuthFlow(
                                 val email = if (data["email"] == null)
                                     "" else data["email"].toString()
 
-                                if (name.isEmpty() || email.isEmpty()){
+                                if (name.isEmpty() || email.isEmpty()) {
                                     mDb.collection("users")
                                             .document(user.uid)
                                             .update(userObj)
                                             .addOnSuccessListener {
                                                 waitSplash.hide()
-                                                userHandler(user.uid, user.email?:"", nameToPush)
-                                                if(inAuthPopUp) popUp.hide()
+                                                userHandler(user.uid, user.email ?: "", nameToPush)
+                                                if (inAuthPopUp) popUp.hide()
                                             }
                                             .addOnFailureListener { p0 ->
                                                 waitSplash.hide()
@@ -282,21 +283,21 @@ open class AuthFlow(
                                     userHandler(user.uid, email, name)
                                 }
                             } else {
-                               createUser(user, userObj,nameToPush, inAuthPopUp)
+                                createUser(user, userObj, nameToPush, inAuthPopUp)
                             }
                         }
                     }
         }
     }
 
-    fun createUser(user: FirebaseUser, userObj:HashMap<String,Any>, nameToPush: String, inAuthPopUp: Boolean){
+    fun createUser(user: FirebaseUser, userObj: HashMap<String, Any>, nameToPush: String, inAuthPopUp: Boolean) {
         mDb.collection("users")
                 .document(user.uid)
                 .set(userObj)
                 .addOnSuccessListener {
                     waitSplash.hide()
-                    userHandler(user.uid, user.email?:"", nameToPush)
-                    if(inAuthPopUp) popUp.hide()
+                    userHandler(user.uid, user.email ?: "", nameToPush)
+                    if (inAuthPopUp) popUp.hide()
                 }
                 .addOnFailureListener { p0 ->
                     waitSplash.hide()
