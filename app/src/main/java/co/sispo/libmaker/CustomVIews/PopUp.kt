@@ -11,9 +11,8 @@ import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import co.sispo.simplefireauth.R
-import co.sispo.simplefireauth.StringMaster
-import co.sispo.simplefireauth.Utils
+import co.sispo.libmaker.R
+import co.sispo.libmaker.Utils
 
 
 open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = null) {
@@ -36,7 +35,6 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
                 ConstraintLayout.LayoutParams.MATCH_PARENT
         )
-        popUp.setBackgroundColor(StringMaster.myStringMaster!!.accentColor)
 
         if(id == null) {
             popUp.id = View.generateViewId()
@@ -47,7 +45,6 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
         Utils.createMargins(popUpParams, root.id)
 
         bgImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_auth_bg))
-
         bgImg.scaleType = ImageView.ScaleType.FIT_START
 
         val bgParams = ConstraintLayout.LayoutParams(
@@ -57,6 +54,7 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
 
         bgParams.leftToLeft = popUp.id
         bgParams.topToTop = popUp.id
+//        bgParams.bottomToBottom = popUp.id
         bgParams.rightToRight = popUp.id
 
         bgImg.layoutParams = bgParams
@@ -105,7 +103,6 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
         buttonParams.setMargins(0, 0, 0, 0)
 
         button.textSize = 14f
-        button.setTextColor(StringMaster.myStringMaster!!.accentColor)
         button.setBackgroundColor(Color.WHITE)
         button.gravity = Gravity.CENTER
         popUp.addView(button, buttonParams)
