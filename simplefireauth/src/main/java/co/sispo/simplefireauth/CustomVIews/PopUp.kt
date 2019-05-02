@@ -23,6 +23,7 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
     val title = TextView(context)
     val button = TextView(context)
     val backBtn = ImageView(context)
+    val bgImg = ImageView(context)
     var onBackPressed: (() -> Unit)? = null
     var next: (() -> Unit)? = null
 
@@ -37,19 +38,34 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
         )
         popUp.setBackgroundColor(StringMaster.myStringMaster!!.accentColor)
 
+        if(id == null) {
+            popUp.id = View.generateViewId()
+        } else {
+            popUp.id = id
+        }
+
         Utils.createMargins(popUpParams, root.id)
+
+        bgImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_auth_bg))
+        bgImg.scaleType = ImageView.ScaleType.CENTER_CROP
+
+        val bgParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_PARENT
+        )
+
+        bgParams.leftToLeft = popUp.id
+        bgParams.topToTop = popUp.id
+        bgParams.bottomToBottom = popUp.id
+        bgParams.leftToLeft = popUp.id
+
+        bgImg.layoutParams = bgParams
 
         backBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.back_btn))
         val backParams = ConstraintLayout.LayoutParams(
                 dp(48),
                 dp(48)
         )
-
-        if(id == null) {
-            popUp.id = View.generateViewId()
-        } else {
-            popUp.id = id
-        }
 
         backParams.leftToLeft = popUp.id
         backParams.topToTop = popUp.id
@@ -60,6 +76,7 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
             onBackPressed?.invoke()
         })
 
+        popUp.addView(bgImg, bgParams)
         popUp.addView(backBtn, backParams)
         root.addView(popUp, popUpParams)
 
