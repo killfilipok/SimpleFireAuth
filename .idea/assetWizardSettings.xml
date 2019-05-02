@@ -14,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="667" />
-                            <entry key="outputName" value="ic_auth_bg" />
+                            <entry key="height" value="812" />
+                            <entry key="outputName" value="ic_auth_bg_2" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../../../auth_bg.svg" />
-                            <entry key="width" value="374" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../../../auth_bg_2.svg" />
+                            <entry key="width" value="457" />
                           </map>
                         </option>
                       </PersistentState>

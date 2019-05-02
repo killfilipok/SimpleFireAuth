@@ -21,8 +21,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        popUp.createSignUp(::popUpSignUpWithEmail)
-        popUp.show()
+        sign_up.setOnClickListener {
+            popUp.createSignUp(::popUpSignUpWithEmail)
+            popUp.show()
+        }
     }
 
     fun popUpSignUpWithEmail(x: String,t: String,s: String) {

@@ -44,7 +44,7 @@ open class PopUp(var context: Context, root: ConstraintLayout, val id: Int? = nu
 
         Utils.createMargins(popUpParams, root.id)
 
-        bgImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_auth_bg))
+        bgImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_auth_bg_2))
         bgImg.scaleType = ImageView.ScaleType.FIT_START
 
         val bgParams = ConstraintLayout.LayoutParams(
